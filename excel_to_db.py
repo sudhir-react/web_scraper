@@ -8,24 +8,24 @@ def import_excel_to_database():
     excel_path = "laptops.xlsx"
     db_name = "sudhir_projects.db"
     
-    # 1. सुरक्षा जाँच: क्या एक्सेल फ़ाइल फोल्डर में मौजूद है?
+    # 1. Security check: Does the Excel file exist in the folder?
     if not os.path.exists(excel_path):
         print(f"❌ Error: {excel_path} not found! Please make sure it's in the Ai_tech/python folder.")
         return
         
     try:
-        # 2. Pandas के ज़रिए एक्सेल का पूरा डेटा 1 सेकंड में रीड करना
+        # 2. Reading an entire Excel dataset in one second using Pandas.
         print("📥 Reading data from laptops.xlsx...")
         df = pd.read_excel(excel_path)
         
-        # 3. SQLite डेटाबेस से कनेक्ट होना
+        # 3.Connecting to an SQLite database
         conn = sqlite3.connect(db_name)
         
-        # 4. MAGIC LINE: एक्सेल का पूरा डेटाबेस टेबल में ऑटो-ट्रांसफर करना
+        # 4.MAGIC LINE: Automatically transferring the entire Excel database into a table.
         print("💾 Transferring 117+ records directly into database 'laptop_inventory' table...")
         df.to_sql("laptop_inventory", conn, if_exists="replace", index=False)
         
-        # 5. सत्यापन (Verification) - डेटाबेस से टॉप 3 रिकॉर्ड्स निकालकर देखना
+        # 5.Verification – Retrieving and examining the top 3 records from the database. 
         cursor = conn.cursor()
         cursor.execute("SELECT * FROM laptop_inventory LIMIT 3")
         rows = cursor.fetchall()
