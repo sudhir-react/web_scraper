@@ -80,3 +80,6 @@ def run_bfs_production_simulation():
 
 if __name__ == "__main__":
     run_bfs_production_simulation()
+
+x = [1,2,3]
+print(x.pop(0))
